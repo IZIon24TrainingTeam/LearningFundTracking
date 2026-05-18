@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bảng Quản Lý Suất Học - Learning Fund</title>
+    <title>Learning Fund Dashboard</title>
     <!-- Google Fonts: Montserrat -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- FontAwesome for Premium Icons -->
@@ -154,67 +154,11 @@
             line-height: 1.5;
         }
 
-        /* --- Configuration Panel --- */
-        .config-panel {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 1.2rem 1.8rem;
-            margin-bottom: 2rem;
-            width: 100%;
-            display: flex;
-            gap: 1.2rem;
-            align-items: center;
-            flex-wrap: wrap;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-
-        .config-title {
-            font-weight: 700;
-            font-size: 0.9rem;
-            color: var(--secondary);
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .config-input-group {
-            flex: 1;
-            min-width: 280px;
-            display: flex;
-            gap: 0.6rem;
-        }
-
-        .config-input {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(17, 43, 91, 0.15);
-            border-radius: 10px;
-            padding: 0.7rem 1rem;
-            color: var(--text-main);
-            font-size: 0.88rem;
-            font-weight: 500;
-            outline: none;
-            transition: var(--transition);
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
-        }
-
-        .config-input:focus {
-            border-color: var(--primary);
-            background: #ffffff;
-            box-shadow: 0 0 10px rgba(255, 90, 0, 0.12);
-        }
-
         .btn {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 0.7rem 1.4rem;
+            padding: 0.6rem 1.2rem;
             border-radius: 10px;
             font-weight: 700;
             font-size: 0.88rem;
@@ -222,14 +166,14 @@
             transition: var(--transition);
             display: flex;
             align-items: center;
-            gap: 0.6rem;
-            box-shadow: 0 4px 12px var(--primary-glow);
+            gap: 0.5rem;
+            box-shadow: 0 4px 12px rgba(255, 90, 0, 0.15);
         }
 
         .btn:hover {
             transform: translateY(-2px);
             background: #ff7324;
-            box-shadow: 0 6px 16px rgba(255, 90, 0, 0.35);
+            box-shadow: 0 6px 16px rgba(255, 90, 0, 0.3);
         }
 
         .btn:active {
@@ -239,13 +183,13 @@
         .btn-secondary {
             background: rgba(17, 43, 91, 0.05);
             color: var(--secondary);
-            border: 1px solid rgba(17, 43, 91, 0.1);
+            border: 1px solid rgba(17, 43, 91, 0.15);
             box-shadow: none;
         }
 
         .btn-secondary:hover {
             background: rgba(17, 43, 91, 0.1);
-            border-color: rgba(17, 43, 91, 0.2);
+            border-color: rgba(17, 43, 91, 0.25);
             box-shadow: none;
             color: var(--secondary);
         }
@@ -434,7 +378,7 @@
             border-color: rgba(244, 63, 94, 0.15);
         }
 
-        /* Search Actions */
+        /* Search & Filter Actions */
         .table-actions {
             display: flex;
             justify-content: space-between;
@@ -444,39 +388,57 @@
             flex-wrap: wrap;
         }
 
-        .search-wrapper {
+        .filter-wrapper {
             position: relative;
             flex: 1;
             max-width: 380px;
             min-width: 250px;
         }
 
-        .search-wrapper i {
+        .filter-wrapper i {
             position: absolute;
             left: 1rem;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-muted);
             font-size: 0.95rem;
+            pointer-events: none;
         }
 
-        .search-input {
+        .filter-select {
             width: 100%;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.85);
             border: 1px solid rgba(17, 43, 91, 0.12);
             border-radius: 12px;
-            padding: 0.7rem 1rem 0.7rem 2.4rem;
+            padding: 0.7rem 2.2rem 0.7rem 2.4rem;
             color: var(--text-main);
             font-size: 0.9rem;
-            font-weight: 500;
+            font-weight: 600;
             outline: none;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
             transition: var(--transition);
         }
 
-        .search-input:focus {
+        .filter-select:focus {
             border-color: var(--primary);
             background: #ffffff;
             box-shadow: 0 0 10px rgba(255, 90, 0, 0.08);
+        }
+
+        .filter-wrapper::after {
+            content: '\f078'; /* FontAwesome chevron-down */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            pointer-events: none;
         }
 
         .entries-count {
@@ -530,7 +492,7 @@
         }
 
         tr:hover {
-            background: rgba(255, 90, 0, 0.02); /* Extremely faint orange highlight matching reference link */
+            background: rgba(255, 90, 0, 0.02); /* Faint orange hover */
         }
 
         .std-name {
@@ -578,7 +540,7 @@
             font-weight: 500;
         }
 
-        /* Status Badges conforming to reference styles */
+        /* Status Badges */
         .badge {
             display: inline-flex;
             align-items: center;
@@ -705,29 +667,13 @@
             box-shadow: 0 4px 12px rgba(244, 63, 94, 0.04);
         }
 
-        /* --- Keyframe Animations --- */
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         /* Responsive styling */
         @media (max-width: 768px) {
             h1 { font-size: 2rem; }
             .stats-grid { grid-template-columns: 1fr; }
-            .config-panel { flex-direction: column; align-items: stretch; }
-            .config-input-group { min-width: 100%; }
-            .tab-btn { padding: 0.6rem 0.9rem; font-size: 0.85rem; }
             td, th { padding: 0.9rem; font-size: 0.88rem; }
             .table-actions { flex-direction: column; align-items: stretch; }
-            .search-wrapper { max-width: 100%; }
+            .filter-wrapper { max-width: 100%; }
         }
     </style>
 </head>
@@ -736,13 +682,13 @@
     <!-- Loading Overlay -->
     <div id="loadingOverlay" class="loading-overlay">
         <div class="spinner"></div>
-        <div class="loading-text">ĐANG TẢI DỮ LIỆU...</div>
+        <div class="loading-text">LOADING DATA...</div>
     </div>
 
     <div class="container">
         <!-- Brand Header -->
         <header>
-            <!-- Vùng chèn logo công ty (Tự động tải logo.png ở cùng thư mục nếu có, hoặc hiện placeholder kính mờ) -->
+            <!-- Vùng chèn logo công ty -->
             <div class="logo-wrapper">
                 <img src="logo.png" alt="Company Logo" onerror="this.style.display='none'; document.getElementById('logoPlaceholder').style.display='flex';" id="companyLogo" />
                 <div class="logo-placeholder" id="logoPlaceholder" style="display: none;">
@@ -752,67 +698,50 @@
             </div>
             
             <div class="brand-badge">Learning Fund Program</div>
-            <h1>Hệ Thống Quản Lý <span>25 Suất Học</span></h1>
-            <p class="subtitle">Bảng theo dõi giữ chỗ, trạng thái học tập và phân bổ danh sách hàng chờ tự động trong 45 ngày.</p>
+            <h1>Learning Fund <span>Management System</span></h1>
+            <p class="subtitle">Real-time tracking for approved slots, learning progress, and fair 45-day waitlist allocations.</p>
         </header>
-
-        <!-- Configuration Bar -->
-        <div class="config-panel">
-            <div class="config-title">
-                <i class="fa-solid fa-gears" style="color: var(--primary);"></i>
-                <span>Cấu hình API Google Sheets:</span>
-            </div>
-            <div class="config-input-group">
-                <input type="text" id="webAppUrl" class="config-input" placeholder="Dán URL Web App (Macros) từ Apps Script của bạn vào đây..." />
-                <button onclick="saveApiUrl()" class="btn">
-                    <i class="fa-solid fa-floppy-disk"></i> Lưu
-                </button>
-            </div>
-            <button onclick="fetchData()" class="btn btn-secondary" id="refreshBtn">
-                <i class="fa-solid fa-arrows-rotate" id="refreshIcon"></i> Làm mới
-            </button>
-        </div>
 
         <!-- Error Notification -->
         <div id="errorBanner" class="error-banner">
             <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.2rem;"></i>
-            <span id="errorMessage">Đã xảy ra lỗi khi kết nối tới API Google Sheets. Vui lòng kiểm tra lại URL cấu hình!</span>
+            <span id="errorMessage">An error occurred while connecting to the Google Sheets API. Please check your configuration!</span>
         </div>
 
         <!-- Stats Panel -->
         <div class="stats-grid">
             <div class="stat-card card-total">
                 <div class="stat-header">
-                    <span>Tổng số suất học</span>
+                    <span>Total Slots</span>
                     <i class="fa-solid fa-graduation-cap" style="color: var(--text-muted);"></i>
                 </div>
                 <div class="stat-value total-val" id="statTotal">25</div>
-                <div class="stat-desc">Số suất được duyệt cố định hàng năm</div>
+                <div class="stat-desc">Fixed learning slots allocated annually</div>
             </div>
 
             <div class="stat-card card-used">
                 <div class="stat-header">
-                    <span>Suất đã chiếm</span>
+                    <span>Occupied Slots</span>
                     <i class="fa-solid fa-user-check" style="color: var(--primary);"></i>
                 </div>
                 <div class="stat-value used-val" id="statUsed">0</div>
-                <div class="stat-desc">Đã duyệt + Đang học + Hoàn thành</div>
+                <div class="stat-desc">Approved slots + In Progress + Completed</div>
             </div>
 
             <div class="stat-card card-free">
                 <div class="stat-header">
-                    <span>Suất còn trống</span>
+                    <span>Available Slots</span>
                     <i class="fa-solid fa-user-plus" style="color: var(--emerald);"></i>
                 </div>
                 <div class="stat-value free-val" id="statAvailable">25</div>
-                <div class="stat-desc">Suất trống sẵn sàng cấp phát tiếp theo</div>
+                <div class="stat-desc">Free slots ready for the next allocation</div>
             </div>
         </div>
 
         <!-- Progress Tracking Bar -->
         <div class="progress-section">
             <div class="progress-info">
-                <span style="color: var(--text-muted);">Tỷ lệ lấp đầy suất học</span>
+                <span style="color: var(--text-muted);">Slot Fill Rate</span>
                 <span id="progressPercentage" style="color: var(--secondary); font-weight: 700;">0%</span>
             </div>
             <div class="progress-track">
@@ -825,26 +754,33 @@
             <!-- Tabs Nav -->
             <div class="tabs-nav">
                 <button class="tab-btn active tab-active" onclick="switchTab('active')">
-                    <i class="fa-solid fa-user-clock"></i> Đang Giữ Suất / Đang Học (<span id="countActive">0</span>)
+                    <i class="fa-solid fa-user-clock"></i> Active Slots (<span id="countActive">0</span>)
                 </button>
                 <button class="tab-btn tab-completed" onclick="switchTab('completed')">
-                    <i class="fa-solid fa-circle-check"></i> Đã Hoàn Thành (<span id="countCompleted">0</span>)
+                    <i class="fa-solid fa-circle-check"></i> Completed (<span id="countCompleted">0</span>)
                 </button>
                 <button class="tab-btn tab-waiting" onclick="switchTab('waiting')">
-                    <i class="fa-solid fa-clock-rotate-left"></i> Hàng Chờ (<span id="countWaiting">0</span>)
+                    <i class="fa-solid fa-clock-rotate-left"></i> Waitlist (<span id="countWaiting">0</span>)
                 </button>
                 <button class="tab-btn tab-cancelled" onclick="switchTab('cancelled')">
-                    <i class="fa-solid fa-user-slash"></i> Đã Thu Hồi / Hủy (<span id="countCancelled">0</span>)
+                    <i class="fa-solid fa-user-slash"></i> Revoked / Cancelled (<span id="countCancelled">0</span>)
                 </button>
             </div>
 
             <!-- Actions Row -->
             <div class="table-actions">
-                <div class="search-wrapper">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="searchInput" class="search-input" placeholder="Tìm kiếm theo họ tên hoặc email..." oninput="handleSearch()" />
+                <div class="filter-wrapper">
+                    <i class="fa-solid fa-filter"></i>
+                    <select id="deptFilter" class="filter-select" onchange="handleDeptFilter()">
+                        <option value="ALL">All Departments</option>
+                    </select>
                 </div>
-                <div class="entries-count" id="entriesCount">Hiển thị 0 dòng</div>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div class="entries-count" id="entriesCount">Showing 0 rows</div>
+                    <button onclick="fetchData()" class="btn btn-secondary" id="refreshBtn" style="padding: 0.5rem 1rem; border-radius: 8px;">
+                        <i class="fa-solid fa-arrows-rotate" id="refreshIcon"></i> Refresh
+                    </button>
+                </div>
             </div>
 
             <!-- Dynamic Table -->
@@ -859,61 +795,49 @@
                 </table>
                 <div id="emptyState" class="empty-state" style="display: none;">
                     <i class="fa-solid fa-folder-open"></i>
-                    <p>Không tìm thấy dữ liệu nào phù hợp</p>
-                    <span>Vui lòng kiểm tra lại bộ lọc hoặc nhập thêm dữ liệu trên Google Sheets!</span>
+                    <p>No matching records found</p>
+                    <span>Please add more records to your Google Sheet or check your department filter!</span>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
+        // =========================================================================
+        // CONFIGURE YOUR GOOGLE WEB APP API URL HERE:
+        // Replace this string with the Web App link you copied from Apps Script Step 4.
+        // =========================================================================
+        const API_URL = "https://script.google.com/macros/s/AKfycbzCrTgbk4APKMCY-RkalMJTAEEdz9onqBDF_XB1ngL0s554PqKaPMNGOoB6fXy6lve2lQ/exec";
+
         // Global variables
         let currentTab = 'active';
         let apiData = {
-            totalSeats: 25,
-            usedSeats: 0,
-            availableSeats: 25,
-            activeSeats: [],
-            completedSeats: [],
+            totalSlots: 25,
+            usedSlots: 0,
+            availableSlots: 25,
+            activeSlots: [],
+            completedSlots: [],
             waitingList: [],
             cancelledList: []
         };
         let filteredList = [];
+        let uniqueDepts = new Set();
 
         // Init on page load
         window.onload = function() {
-            // Load saved API Web App URL
-            const savedUrl = localStorage.getItem('learning_fund_api_url');
-            if (savedUrl) {
-                document.getElementById('webAppUrl').value = savedUrl;
-                fetchData();
-            } else {
-                // If no URL is saved, hide the loading screen and show manual setup prompt
+            fetchData();
+        };
+
+        // Fetch data from Web App API
+        function fetchData() {
+            if (API_URL === "DÁN_LINK_WEB_APP_APPS_SCRIPT_CỦA_BẠN_VÀO_ĐÂY" || !API_URL) {
+                showError("You have not configured your API_URL inside index.html yet. Please open index.html in a code editor, locate the 'const API_URL' variable near line 557 of the script, and replace it with your Google Web App URL!");
+                
+                // Hide loading UI
                 document.getElementById('loadingOverlay').style.opacity = '0';
                 setTimeout(() => {
                     document.getElementById('loadingOverlay').style.display = 'none';
                 }, 400);
-                showError("Bạn chưa cấu hình URL Web App của Google Apps Script. Vui lòng dán link vào ô cấu hình ở trên và nhấn Lưu!");
-            }
-        };
-
-        // Save API URL to LocalStorage
-        function saveApiUrl() {
-            const urlInput = document.getElementById('webAppUrl').value.trim();
-            if (!urlInput) {
-                alert("Vui lòng nhập URL Web App hợp lệ!");
-                return;
-            }
-            localStorage.setItem('learning_fund_api_url', urlInput);
-            alert("Đã lưu URL cấu hình thành công!");
-            fetchData();
-        }
-
-        // Fetch data from Web App API
-        function fetchData() {
-            const apiUrl = localStorage.getItem('learning_fund_api_url');
-            if (!apiUrl) {
-                showError("Chưa có cấu hình URL API. Vui lòng cấu hình trước!");
                 return;
             }
 
@@ -925,10 +849,10 @@
             const refreshIcon = document.getElementById('refreshIcon');
             if (refreshIcon) refreshIcon.classList.add('fa-spin');
 
-            fetch(apiUrl)
+            fetch(API_URL)
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error("Mã trạng thái phản hồi không hợp lệ: " + response.status);
+                        throw new Error("Invalid response status code: " + response.status);
                     }
                     return response.json();
                 })
@@ -938,11 +862,12 @@
                     }
                     apiData = data;
                     updateDashboardStats();
+                    populateDeptsDropdown();
                     renderCurrentTab();
                 })
                 .catch(error => {
                     console.error("Fetch error: ", error);
-                    showError("Lỗi kết nối API Google Sheets: " + error.message + ". Hãy đảm bảo bạn đã deploy Web App dưới quyền 'Anyone' (Bất kỳ ai).");
+                    showError("Google Sheets API connection error: " + error.message + ". Make sure you have deployed your Web App as 'Anyone' (Who has access) and 'Me' (Execute as).");
                 })
                 .finally(() => {
                     // Hide loading UI
@@ -964,23 +889,64 @@
 
         // Update Dashboard Cards and Progress Bar
         function updateDashboardStats() {
-            document.getElementById('statTotal').textContent = apiData.totalSeats;
-            document.getElementById('statUsed').textContent = apiData.usedSeats;
-            document.getElementById('statAvailable').textContent = apiData.availableSeats;
+            document.getElementById('statTotal').textContent = apiData.totalSlots;
+            document.getElementById('statUsed').textContent = apiData.usedSlots;
+            document.getElementById('statAvailable').textContent = apiData.availableSlots;
 
             // Counts for tabs
-            document.getElementById('countActive').textContent = apiData.activeSeats ? apiData.activeSeats.length : 0;
-            document.getElementById('countCompleted').textContent = apiData.completedSeats ? apiData.completedSeats.length : 0;
+            document.getElementById('countActive').textContent = apiData.activeSlots ? apiData.activeSlots.length : 0;
+            document.getElementById('countCompleted').textContent = apiData.completedSlots ? apiData.completedSlots.length : 0;
             document.getElementById('countWaiting').textContent = apiData.waitingList ? apiData.waitingList.length : 0;
             document.getElementById('countCancelled').textContent = apiData.cancelledList ? apiData.cancelledList.length : 0;
 
             // Fill rate bar
-            let fillRate = (apiData.usedSeats / apiData.totalSeats) * 100;
+            let fillRate = (apiData.usedSlots / apiData.totalSlots) * 100;
             if (fillRate > 100) fillRate = 100;
             if (fillRate < 0) fillRate = 0;
             
             document.getElementById('progressPercentage').textContent = Math.round(fillRate) + '%';
             document.getElementById('progressBar').style.width = fillRate + '%';
+        }
+
+        // Dynamic extraction and populating of departments list
+        function populateDeptsDropdown() {
+            const select = document.getElementById('deptFilter');
+            const prevValue = select.value;
+            
+            uniqueDepts.clear();
+            
+            // Gather all departments from all lists
+            const allLists = [
+                ...(apiData.activeSlots || []),
+                ...(apiData.completedSlots || []),
+                ...(apiData.waitingList || []),
+                ...(apiData.cancelledList || [])
+            ];
+            
+            allLists.forEach(item => {
+                if (item.department) {
+                    uniqueDepts.add(item.department.trim());
+                }
+            });
+            
+            // Sort alphabetically
+            const sortedDepts = Array.from(uniqueDepts).sort();
+            
+            // Clear and rebuild options
+            select.innerHTML = '<option value="ALL">All Departments</option>';
+            sortedDepts.forEach(dept => {
+                const option = document.createElement('option');
+                option.value = dept;
+                option.textContent = dept;
+                select.appendChild(option);
+            });
+            
+            // Restore previous choice if still valid, otherwise reset
+            if (uniqueDepts.has(prevValue)) {
+                select.value = prevValue;
+            } else {
+                select.value = 'ALL';
+            }
         }
 
         // Switch active tab view
@@ -996,24 +962,24 @@
             const selectedBtn = document.querySelector(`.tab-${tabName === 'active' ? 'active' : tabName}`);
             if (selectedBtn) selectedBtn.classList.add('active');
 
-            // Reset search input
-            document.getElementById('searchInput').value = '';
+            // Reset department filter to All on tab switch
+            const selectEl = document.getElementById('deptFilter');
+            if (selectEl) selectEl.value = 'ALL';
 
             renderCurrentTab();
         }
 
-        // Handle typing search
-        function handleSearch() {
-            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+        // Filter the list by selected department dropdown
+        function handleDeptFilter() {
+            const selectedDept = document.getElementById('deptFilter').value;
             const sourceList = getSourceList();
             
-            if (query === "") {
+            if (selectedDept === "ALL") {
                 filteredList = [...sourceList];
             } else {
                 filteredList = sourceList.filter(item => {
-                    const name = item.name ? item.name.toLowerCase() : "";
-                    const email = item.email ? item.email.toLowerCase() : "";
-                    return name.includes(query) || email.includes(query);
+                    const dept = item.department ? item.department.trim() : "";
+                    return dept === selectedDept;
                 });
             }
 
@@ -1023,8 +989,8 @@
         // Helper to get raw data array based on current active tab
         function getSourceList() {
             switch (currentTab) {
-                case 'active': return apiData.activeSeats || [];
-                case 'completed': return apiData.completedSeats || [];
+                case 'active': return apiData.activeSlots || [];
+                case 'completed': return apiData.completedSlots || [];
                 case 'waiting': return apiData.waitingList || [];
                 case 'cancelled': return apiData.cancelledList || [];
                 default: return [];
@@ -1033,9 +999,8 @@
 
         // Render table headers and fill in source rows for the selected tab
         function renderCurrentTab() {
-            // Reset filtered list to full source list
-            const sourceList = getSourceList();
-            filteredList = [...sourceList];
+            // Reapply current department filter
+            handleDeptFilter();
 
             // Render table header
             const thead = document.getElementById('tableHead');
@@ -1044,30 +1009,30 @@
             let headerRow = document.createElement('tr');
             if (currentTab === 'active') {
                 headerRow.innerHTML = `
-                    <th>Học viên</th>
-                    <th>Điện thoại</th>
-                    <th>Trạng thái</th>
-                    <th>Ngày duyệt</th>
-                    <th style="text-align: right;">Thời hạn còn lại</th>
+                    <th>Student</th>
+                    <th>Course</th>
+                    <th>Status</th>
+                    <th>Approval Date</th>
+                    <th style="text-align: right;">Days Remaining</th>
                 `;
             } else if (currentTab === 'completed') {
                 headerRow.innerHTML = `
-                    <th>Học viên</th>
-                    <th>Thông tin Email</th>
-                    <th style="text-align: right;">Trạng thái</th>
+                    <th>Student</th>
+                    <th>Course Name</th>
+                    <th style="text-align: right;">Status</th>
                 `;
             } else if (currentTab === 'waiting') {
                 headerRow.innerHTML = `
-                    <th>Học viên</th>
-                    <th>Điện thoại</th>
-                    <th>Ngày đăng ký</th>
-                    <th style="text-align: right;">Trạng thái</th>
+                    <th>Student</th>
+                    <th>Course Name</th>
+                    <th>Registration Date</th>
+                    <th style="text-align: right;">Status</th>
                 `;
             } else if (currentTab === 'cancelled') {
                 headerRow.innerHTML = `
-                    <th>Học viên</th>
-                    <th>Trạng thái</th>
-                    <th>Lý do thu hồi / Ghi chú</th>
+                    <th>Student</th>
+                    <th>Status</th>
+                    <th>Reason / Notes</th>
                 `;
             }
             thead.appendChild(headerRow);
@@ -1083,6 +1048,28 @@
             return lastWord.charAt(0).toUpperCase();
         }
 
+        // Helper to translate Vietnamese countdown and status texts to English beautifully
+        function translateCountdown(str) {
+            if (!str) return "";
+            return str.replace("ngày", "Days")
+                      .replace("Đang học", "In Progress")
+                      .replace("Quá hạn", "Overdue");
+        }
+
+        // Helper to translate statuses to English beautifully
+        function translateStatus(str) {
+            if (!str) return "";
+            switch (str) {
+                case "Đã duyệt (giữ chỗ)": return "Approved";
+                case "Đang thực hiện": return "In Progress";
+                case "Hoàn thành": return "Completed";
+                case "Hàng chờ": return "Waitlist";
+                case "Quá hạn": return "Overdue";
+                case "Hủy": return "Cancelled";
+                default: return str;
+            }
+        }
+
         // Render rows content based on filtered list
         function renderTableContent() {
             const tbody = document.getElementById('tableBody');
@@ -1091,7 +1078,7 @@
             
             tbody.innerHTML = '';
             
-            document.getElementById('entriesCount').textContent = `Hiển thị ${filteredList.length} dòng`;
+            document.getElementById('entriesCount').textContent = `Showing ${filteredList.length} rows`;
 
             if (filteredList.length === 0) {
                 dataTable.style.display = 'none';
@@ -1111,6 +1098,7 @@
                 if (currentTab === 'cancelled') avatarClass += " avatar-cancelled";
 
                 let initials = getInitials(item.name);
+                let displayStatus = translateStatus(item.status);
 
                 if (currentTab === 'active') {
                     // Countdown coloring logic
@@ -1138,22 +1126,22 @@
                                 <div class="${avatarClass}">${initials}</div>
                                 <div>
                                     <span>${item.name}</span>
-                                    <span class="email-text">${item.email || "-"}</span>
+                                    <span class="email-text">${item.department || "-"}</span>
                                 </div>
                             </div>
                         </td>
-                        <td>${item.phone || '<span style="color: var(--text-muted)">-</span>'}</td>
+                        <td>${item.courseName || '<span style="color: var(--text-muted)">-</span>'}</td>
                         <td>
                             <span class="badge ${statusBadgeClass}">
                                 <i class="fa-solid ${item.status === 'Đang thực hiện' ? 'fa-book-open' : 'fa-hourglass-start'}"></i>
-                                ${item.status}
+                                ${displayStatus}
                             </span>
                         </td>
                         <td>${item.approvalDate || "-"}</td>
                         <td style="text-align: right;">
                             <span class="countdown ${remainingClass}">
                                 <i class="fa-regular ${remainingStr.includes('Đang học') ? 'fa-circle-play' : 'fa-clock'}"></i>
-                                ${remainingStr}
+                                ${translateCountdown(remainingStr)}
                             </span>
                         </td>
                     `;
@@ -1164,13 +1152,14 @@
                                 <div class="${avatarClass}">${initials}</div>
                                 <div>
                                     <span>${item.name}</span>
+                                    <span class="email-text">${item.department || "-"}</span>
                                 </div>
                             </div>
                         </td>
-                        <td>${item.email || '<span style="color: var(--text-muted)">-</span>'}</td>
+                        <td>${item.courseName || '<span style="color: var(--text-muted)">-</span>'}</td>
                         <td style="text-align: right;">
                             <span class="badge badge-completed">
-                                <i class="fa-solid fa-circle-check"></i> Hoàn thành
+                                <i class="fa-solid fa-circle-check"></i> Completed
                             </span>
                         </td>
                     `;
@@ -1181,34 +1170,34 @@
                                 <div class="${avatarClass}">${initials}</div>
                                 <div>
                                     <span>${item.name}</span>
-                                    <span class="email-text">${item.email || "-"}</span>
+                                    <span class="email-text">${item.department || "-"}</span>
                                 </div>
                             </div>
                         </td>
-                        <td>${item.phone || '<span style="color: var(--text-muted)">-</span>'}</td>
+                        <td>${item.courseName || '<span style="color: var(--text-muted)">-</span>'}</td>
                         <td>${item.entryTime || "-"}</td>
                         <td style="text-align: right;">
                             <span class="badge badge-waiting">
-                                <i class="fa-solid fa-clock-rotate-left"></i> Hàng chờ
+                                <i class="fa-solid fa-clock-rotate-left"></i> Waitlist
                             </span>
                         </td>
                     `;
                 } else if (currentTab === 'cancelled') {
-                    let badgeClass = item.status === "Hủy" ? "badge-cancelled" : "badge-cancelled"; // dynamic if needed
+                    let badgeClass = item.status === "Hủy" ? "badge-cancelled" : "badge-cancelled";
                     row.innerHTML = `
                         <td>
                             <div class="std-name">
                                 <div class="${avatarClass}">${initials}</div>
                                 <div>
                                     <span>${item.name}</span>
-                                    <span class="email-text">${item.email || "-"}</span>
+                                    <span class="email-text">${item.department || "-"}</span>
                                 </div>
                             </div>
                         </td>
                         <td>
                             <span class="badge ${badgeClass}">
                                 <i class="fa-solid ${item.status === 'Hủy' ? 'fa-ban' : 'fa-circle-exclamation'}"></i>
-                                ${item.status}
+                                ${displayStatus}
                             </span>
                         </td>
                         <td style="color: #b91c1c; font-style: italic;">${item.note || '<span style="color: var(--text-muted); font-style: normal;">-</span>'}</td>

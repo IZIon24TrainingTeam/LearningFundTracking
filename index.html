@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảng Quản Lý Suất Học - Learning Fund</title>
+    <!-- Google Fonts: Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Branding colors matching the reference link */
+            --primary: #ff5a00; /* Vibrant Orange */
+            --primary-light: #ff8b4d;
+            --secondary: #112b5b; /* Deep Navy */
+            --bg-color: #fcfcfc;
+            --text-main: #1e293b; /* Slate-800 for high readability */
+            --text-muted: #64748b; /* Slate-500 */
+            --glass-bg: rgba(255, 255, 255, 0.85); /* Premium Light Glass background */
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --shadow: 0 8px 32px rgba(17, 43, 91, 0.08); /* Soft Navy-tinted shadow */
+            
+            /* Status colors */
+            --emerald: #10b981;
+            --purple: #8b5cf6;
+            --rose: #f43f5e;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            /* Light theme gold-to-blue gradient background matching reference link */
+            background: linear-gradient(135deg, #fef3c7 0%, #e0f2fe 100%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            padding: 2.5rem 1.5rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        /* --- Header & Logo Styles --- */
+        header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .logo-wrapper {
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 90px;
+            width: 100%;
+        }
+
+        .logo-wrapper img {
+            max-height: 90px;
+            max-width: 280px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(17, 43, 91, 0.1));
+            transition: var(--transition);
+        }
+
+        .logo-wrapper img:hover {
+            transform: scale(1.03);
+        }
+
+        .logo-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1.2rem 2.5rem;
+            border: 2px dashed rgba(17, 43, 91, 0.15);
+            border-radius: 14px;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(8px);
+            transition: var(--transition);
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(17, 43, 91, 0.03);
+        }
+
+        .logo-placeholder:hover {
+            border-color: var(--primary);
+            background: rgba(255, 90, 0, 0.03);
+            color: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .logo-placeholder i {
+            font-size: 1.8rem;
+            color: var(--primary);
+            filter: drop-shadow(0 2px 4px rgba(255, 90, 0, 0.2));
+        }
+
+        .brand-badge {
+            background: rgba(255, 90, 0, 0.08);
+            border: 1px solid rgba(255, 90, 0, 0.2);
+            color: var(--primary);
+            padding: 0.4rem 1.1rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.8rem;
+            box-shadow: 0 4px 10px rgba(255, 90, 0, 0.05);
+        }
+
+        h1 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        h1 span {
+            color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), #ff8b4d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            max-width: 650px;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        /* --- Configuration Panel --- */
+        .config-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.2rem 1.8rem;
+            margin-bottom: 2rem;
+            width: 100%;
+            display: flex;
+            gap: 1.2rem;
+            align-items: center;
+            flex-wrap: wrap;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .config-title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .config-input-group {
+            flex: 1;
+            min-width: 280px;
+            display: flex;
+            gap: 0.6rem;
+        }
+
+        .config-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(17, 43, 91, 0.15);
+            border-radius: 10px;
+            padding: 0.7rem 1rem;
+            color: var(--text-main);
+            font-size: 0.88rem;
+            font-weight: 500;
+            outline: none;
+            transition: var(--transition);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .config-input:focus {
+            border-color: var(--primary);
+            background: #ffffff;
+            box-shadow: 0 0 10px rgba(255, 90, 0, 0.12);
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.4rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            box-shadow: 0 4px 12px var(--primary-glow);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            background: #ff7324;
+            box-shadow: 0 6px 16px rgba(255, 90, 0, 0.35);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: rgba(17, 43, 91, 0.05);
+            color: var(--secondary);
+            border: 1px solid rgba(17, 43, 91, 0.1);
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(17, 43, 91, 0.1);
+            border-color: rgba(17, 43, 91, 0.2);
+            box-shadow: none;
+            color: var(--secondary);
+        }
+
+        /* --- Stats Grid --- */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            width: 100%;
+        }
+
+        .stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.8rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(17, 43, 91, 0.15);
+            box-shadow: 0 12px 40px rgba(17, 43, 91, 0.12);
+        }
+
+        /* Custom top border colors for each card matching reference layout */
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+        }
+
+        .card-total::before { background: var(--secondary); }
+        .card-used::before { background: var(--primary); }
+        .card-free::before { background: var(--emerald); }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-muted);
+            margin-bottom: 1.2rem;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-header i {
+            font-size: 1.2rem;
+        }
+
+        .stat-value {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 0.6rem;
+        }
+
+        .total-val { color: var(--secondary); }
+        .used-val { color: var(--primary); }
+        .free-val { color: var(--emerald); }
+
+        .stat-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* --- Progress Section --- */
+        .progress-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.4rem 1.8rem;
+            margin-bottom: 2.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.92rem;
+            margin-bottom: 0.6rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .progress-track {
+            height: 14px;
+            background: rgba(17, 43, 91, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(17, 43, 91, 0.03);
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary-light), var(--primary));
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(255, 90, 0, 0.2);
+            transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* --- Content Panels --- */
+        .content-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+        }
+
+        /* Tabs Navigation */
+        .tabs-nav {
+            display: flex;
+            gap: 0.5rem;
+            border-bottom: 2px solid rgba(17, 43, 91, 0.06);
+            padding-bottom: 1.1rem;
+            margin-bottom: 1.8rem;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .tabs-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.7rem 1.4rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: var(--secondary);
+            background: rgba(17, 43, 91, 0.04);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            background: rgba(255, 90, 0, 0.08);
+            border: 1px solid rgba(255, 90, 0, 0.15);
+        }
+
+        .tab-btn.active.tab-completed {
+            color: #059669;
+            background: rgba(16, 185, 129, 0.08);
+            border-color: rgba(16, 185, 129, 0.15);
+        }
+
+        .tab-btn.active.tab-waiting {
+            color: #7c3aed;
+            background: rgba(139, 92, 246, 0.08);
+            border-color: rgba(139, 92, 246, 0.15);
+        }
+
+        .tab-btn.active.tab-cancelled {
+            color: #dc2626;
+            background: rgba(244, 63, 94, 0.08);
+            border-color: rgba(244, 63, 94, 0.15);
+        }
+
+        /* Search Actions */
+        .table-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.6rem;
+            flex-wrap: wrap;
+        }
+
+        .search-wrapper {
+            position: relative;
+            flex: 1;
+            max-width: 380px;
+            min-width: 250px;
+        }
+
+        .search-wrapper i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .search-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(17, 43, 91, 0.12);
+            border-radius: 12px;
+            padding: 0.7rem 1rem 0.7rem 2.4rem;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            font-weight: 500;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            background: #ffffff;
+            box-shadow: 0 0 10px rgba(255, 90, 0, 0.08);
+        }
+
+        .entries-count {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        /* Table & Lists layout */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: 16px;
+            border: 1px solid rgba(17, 43, 91, 0.08);
+            background: rgba(255, 255, 255, 0.4);
+            box-shadow: inset 0 2px 8px rgba(17, 43, 91, 0.02);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.92rem;
+        }
+
+        th {
+            background: rgba(17, 43, 91, 0.03);
+            color: var(--secondary);
+            font-weight: 700;
+            padding: 1.1rem 1.2rem;
+            border-bottom: 2px solid rgba(17, 43, 91, 0.06);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        td {
+            padding: 1.1rem 1.2rem;
+            border-bottom: 1px solid rgba(17, 43, 91, 0.06);
+            color: var(--text-main);
+            font-weight: 500;
+            vertical-align: middle;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr {
+            transition: background 0.2s ease;
+        }
+
+        tr:hover {
+            background: rgba(255, 90, 0, 0.02); /* Extremely faint orange highlight matching reference link */
+        }
+
+        .std-name {
+            font-weight: 700;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 6px rgba(255, 90, 0, 0.25);
+        }
+
+        .avatar-purple {
+            background: linear-gradient(135deg, #a78bfa, #7c3aed);
+            box-shadow: 0 2px 6px rgba(124, 58, 237, 0.2);
+        }
+
+        .avatar-completed {
+            background: linear-gradient(135deg, #34d399, #10b981);
+            box-shadow: 0 2px 6px rgba(16, 185, 129, 0.25);
+        }
+
+        .avatar-cancelled {
+            background: linear-gradient(135deg, #fb7185, #f43f5e);
+            box-shadow: 0 2px 6px rgba(244, 63, 94, 0.25);
+        }
+
+        .email-text {
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            display: block;
+            margin-top: 0.15rem;
+            font-weight: 500;
+        }
+
+        /* Status Badges conforming to reference styles */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.35rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-approved {
+            background: rgba(255, 90, 0, 0.12);
+            color: var(--primary);
+            border: 1px solid rgba(255, 90, 0, 0.2);
+        }
+
+        .badge-inprogress {
+            background: rgba(17, 43, 91, 0.08);
+            color: var(--secondary);
+            border: 1px solid rgba(17, 43, 91, 0.15);
+        }
+
+        .badge-completed {
+            background: rgba(16, 185, 129, 0.12);
+            color: #059669;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .badge-waiting {
+            background: rgba(139, 92, 246, 0.12);
+            color: #7c3aed;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .badge-cancelled {
+            background: rgba(244, 63, 94, 0.12);
+            color: #dc2626;
+            border: 1px solid rgba(244, 63, 94, 0.2);
+        }
+
+        /* Countdown display */
+        .countdown {
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .countdown-safe { color: #059669; }
+        .countdown-warning { color: #d97706; }
+        .countdown-danger { color: #dc2626; filter: drop-shadow(0 2px 4px rgba(220, 38, 38, 0.1)); }
+        .countdown-none { color: var(--text-muted); font-weight: normal; }
+
+        /* Empty state design */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            color: rgba(17, 43, 91, 0.06);
+            margin-bottom: 1.2rem;
+        }
+
+        .empty-state p {
+            font-size: 0.98rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .empty-state span {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* --- Loading Screen --- */
+        .loading-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, #fef3c7 0%, #e0f2fe 100%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.4s ease;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid rgba(17, 43, 91, 0.06);
+            border-left-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+            box-shadow: 0 4px 12px rgba(255, 90, 0, 0.1);
+        }
+
+        .loading-text {
+            margin-top: 1.2rem;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            color: var(--secondary);
+            animation: pulse 1.5s infinite;
+        }
+
+        /* Error Banner */
+        .error-banner {
+            background: rgba(244, 63, 94, 0.06);
+            border: 1px solid rgba(244, 63, 94, 0.15);
+            color: #b91c1c;
+            border-radius: 12px;
+            padding: 1.1rem;
+            margin-bottom: 2rem;
+            display: none;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 0.92rem;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(244, 63, 94, 0.04);
+        }
+
+        /* --- Keyframe Animations --- */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive styling */
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .config-panel { flex-direction: column; align-items: stretch; }
+            .config-input-group { min-width: 100%; }
+            .tab-btn { padding: 0.6rem 0.9rem; font-size: 0.85rem; }
+            td, th { padding: 0.9rem; font-size: 0.88rem; }
+            .table-actions { flex-direction: column; align-items: stretch; }
+            .search-wrapper { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+        <div class="loading-text">ĐANG TẢI DỮ LIỆU...</div>
+    </div>
+
+    <div class="container">
+        <!-- Brand Header -->
+        <header>
+            <!-- Vùng chèn logo công ty (Tự động tải logo.png ở cùng thư mục nếu có, hoặc hiện placeholder kính mờ) -->
+            <div class="logo-wrapper">
+                <img src="logo.png" alt="Company Logo" onerror="this.style.display='none'; document.getElementById('logoPlaceholder').style.display='flex';" id="companyLogo" />
+                <div class="logo-placeholder" id="logoPlaceholder" style="display: none;">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>COMPANY LOGO</span>
+                </div>
+            </div>
+            
+            <div class="brand-badge">Learning Fund Program</div>
+            <h1>Hệ Thống Quản Lý <span>25 Suất Học</span></h1>
+            <p class="subtitle">Bảng theo dõi giữ chỗ, trạng thái học tập và phân bổ danh sách hàng chờ tự động trong 45 ngày.</p>
+        </header>
+
+        <!-- Configuration Bar -->
+        <div class="config-panel">
+            <div class="config-title">
+                <i class="fa-solid fa-gears" style="color: var(--primary);"></i>
+                <span>Cấu hình API Google Sheets:</span>
+            </div>
+            <div class="config-input-group">
+                <input type="text" id="webAppUrl" class="config-input" placeholder="Dán URL Web App (Macros) từ Apps Script của bạn vào đây..." />
+                <button onclick="saveApiUrl()" class="btn">
+                    <i class="fa-solid fa-floppy-disk"></i> Lưu
+                </button>
+            </div>
+            <button onclick="fetchData()" class="btn btn-secondary" id="refreshBtn">
+                <i class="fa-solid fa-arrows-rotate" id="refreshIcon"></i> Làm mới
+            </button>
+        </div>
+
+        <!-- Error Notification -->
+        <div id="errorBanner" class="error-banner">
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.2rem;"></i>
+            <span id="errorMessage">Đã xảy ra lỗi khi kết nối tới API Google Sheets. Vui lòng kiểm tra lại URL cấu hình!</span>
+        </div>
+
+        <!-- Stats Panel -->
+        <div class="stats-grid">
+            <div class="stat-card card-total">
+                <div class="stat-header">
+                    <span>Tổng số suất học</span>
+                    <i class="fa-solid fa-graduation-cap" style="color: var(--text-muted);"></i>
+                </div>
+                <div class="stat-value total-val" id="statTotal">25</div>
+                <div class="stat-desc">Số suất được duyệt cố định hàng năm</div>
+            </div>
+
+            <div class="stat-card card-used">
+                <div class="stat-header">
+                    <span>Suất đã chiếm</span>
+                    <i class="fa-solid fa-user-check" style="color: var(--primary);"></i>
+                </div>
+                <div class="stat-value used-val" id="statUsed">0</div>
+                <div class="stat-desc">Đã duyệt + Đang học + Hoàn thành</div>
+            </div>
+
+            <div class="stat-card card-free">
+                <div class="stat-header">
+                    <span>Suất còn trống</span>
+                    <i class="fa-solid fa-user-plus" style="color: var(--emerald);"></i>
+                </div>
+                <div class="stat-value free-val" id="statAvailable">25</div>
+                <div class="stat-desc">Suất trống sẵn sàng cấp phát tiếp theo</div>
+            </div>
+        </div>
+
+        <!-- Progress Tracking Bar -->
+        <div class="progress-section">
+            <div class="progress-info">
+                <span style="color: var(--text-muted);">Tỷ lệ lấp đầy suất học</span>
+                <span id="progressPercentage" style="color: var(--secondary); font-weight: 700;">0%</span>
+            </div>
+            <div class="progress-track">
+                <div id="progressBar" class="progress-bar"></div>
+            </div>
+        </div>
+
+        <!-- Content Panel -->
+        <div class="content-panel">
+            <!-- Tabs Nav -->
+            <div class="tabs-nav">
+                <button class="tab-btn active tab-active" onclick="switchTab('active')">
+                    <i class="fa-solid fa-user-clock"></i> Đang Giữ Suất / Đang Học (<span id="countActive">0</span>)
+                </button>
+                <button class="tab-btn tab-completed" onclick="switchTab('completed')">
+                    <i class="fa-solid fa-circle-check"></i> Đã Hoàn Thành (<span id="countCompleted">0</span>)
+                </button>
+                <button class="tab-btn tab-waiting" onclick="switchTab('waiting')">
+                    <i class="fa-solid fa-clock-rotate-left"></i> Hàng Chờ (<span id="countWaiting">0</span>)
+                </button>
+                <button class="tab-btn tab-cancelled" onclick="switchTab('cancelled')">
+                    <i class="fa-solid fa-user-slash"></i> Đã Thu Hồi / Hủy (<span id="countCancelled">0</span>)
+                </button>
+            </div>
+
+            <!-- Actions Row -->
+            <div class="table-actions">
+                <div class="search-wrapper">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Tìm kiếm theo họ tên hoặc email..." oninput="handleSearch()" />
+                </div>
+                <div class="entries-count" id="entriesCount">Hiển thị 0 dòng</div>
+            </div>
+
+            <!-- Dynamic Table -->
+            <div class="table-container">
+                <table id="dataTable">
+                    <thead id="tableHead">
+                        <!-- Table header is injected by JavaScript -->
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Table rows are injected by JavaScript -->
+                    </tbody>
+                </table>
+                <div id="emptyState" class="empty-state" style="display: none;">
+                    <i class="fa-solid fa-folder-open"></i>
+                    <p>Không tìm thấy dữ liệu nào phù hợp</p>
+                    <span>Vui lòng kiểm tra lại bộ lọc hoặc nhập thêm dữ liệu trên Google Sheets!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentTab = 'active';
+        let apiData = {
+            totalSeats: 25,
+            usedSeats: 0,
+            availableSeats: 25,
+            activeSeats: [],
+            completedSeats: [],
+            waitingList: [],
+            cancelledList: []
+        };
+        let filteredList = [];
+
+        // Init on page load
+        window.onload = function() {
+            // Load saved API Web App URL
+            const savedUrl = localStorage.getItem('learning_fund_api_url');
+            if (savedUrl) {
+                document.getElementById('webAppUrl').value = savedUrl;
+                fetchData();
+            } else {
+                // If no URL is saved, hide the loading screen and show manual setup prompt
+                document.getElementById('loadingOverlay').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loadingOverlay').style.display = 'none';
+                }, 400);
+                showError("Bạn chưa cấu hình URL Web App của Google Apps Script. Vui lòng dán link vào ô cấu hình ở trên và nhấn Lưu!");
+            }
+        };
+
+        // Save API URL to LocalStorage
+        function saveApiUrl() {
+            const urlInput = document.getElementById('webAppUrl').value.trim();
+            if (!urlInput) {
+                alert("Vui lòng nhập URL Web App hợp lệ!");
+                return;
+            }
+            localStorage.setItem('learning_fund_api_url', urlInput);
+            alert("Đã lưu URL cấu hình thành công!");
+            fetchData();
+        }
+
+        // Fetch data from Web App API
+        function fetchData() {
+            const apiUrl = localStorage.getItem('learning_fund_api_url');
+            if (!apiUrl) {
+                showError("Chưa có cấu hình URL API. Vui lòng cấu hình trước!");
+                return;
+            }
+
+            // Show loading UI
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            document.getElementById('loadingOverlay').style.opacity = '1';
+            document.getElementById('errorBanner').style.display = 'none';
+            
+            const refreshIcon = document.getElementById('refreshIcon');
+            if (refreshIcon) refreshIcon.classList.add('fa-spin');
+
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Mã trạng thái phản hồi không hợp lệ: " + response.status);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.status === 'error') {
+                        throw new Error(data.message);
+                    }
+                    apiData = data;
+                    updateDashboardStats();
+                    renderCurrentTab();
+                })
+                .catch(error => {
+                    console.error("Fetch error: ", error);
+                    showError("Lỗi kết nối API Google Sheets: " + error.message + ". Hãy đảm bảo bạn đã deploy Web App dưới quyền 'Anyone' (Bất kỳ ai).");
+                })
+                .finally(() => {
+                    // Hide loading UI
+                    document.getElementById('loadingOverlay').style.opacity = '0';
+                    setTimeout(() => {
+                        document.getElementById('loadingOverlay').style.display = 'none';
+                    }, 400);
+                    if (refreshIcon) refreshIcon.classList.remove('fa-spin');
+                });
+        }
+
+        // Show Error Banner
+        function showError(message) {
+            const errorBanner = document.getElementById('errorBanner');
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = message;
+            errorBanner.style.display = 'flex';
+        }
+
+        // Update Dashboard Cards and Progress Bar
+        function updateDashboardStats() {
+            document.getElementById('statTotal').textContent = apiData.totalSeats;
+            document.getElementById('statUsed').textContent = apiData.usedSeats;
+            document.getElementById('statAvailable').textContent = apiData.availableSeats;
+
+            // Counts for tabs
+            document.getElementById('countActive').textContent = apiData.activeSeats ? apiData.activeSeats.length : 0;
+            document.getElementById('countCompleted').textContent = apiData.completedSeats ? apiData.completedSeats.length : 0;
+            document.getElementById('countWaiting').textContent = apiData.waitingList ? apiData.waitingList.length : 0;
+            document.getElementById('countCancelled').textContent = apiData.cancelledList ? apiData.cancelledList.length : 0;
+
+            // Fill rate bar
+            let fillRate = (apiData.usedSeats / apiData.totalSeats) * 100;
+            if (fillRate > 100) fillRate = 100;
+            if (fillRate < 0) fillRate = 0;
+            
+            document.getElementById('progressPercentage').textContent = Math.round(fillRate) + '%';
+            document.getElementById('progressBar').style.width = fillRate + '%';
+        }
+
+        // Switch active tab view
+        function switchTab(tabName) {
+            currentTab = tabName;
+            
+            // Remove active classes
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Set active class on clicked tab button
+            const selectedBtn = document.querySelector(`.tab-${tabName === 'active' ? 'active' : tabName}`);
+            if (selectedBtn) selectedBtn.classList.add('active');
+
+            // Reset search input
+            document.getElementById('searchInput').value = '';
+
+            renderCurrentTab();
+        }
+
+        // Handle typing search
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const sourceList = getSourceList();
+            
+            if (query === "") {
+                filteredList = [...sourceList];
+            } else {
+                filteredList = sourceList.filter(item => {
+                    const name = item.name ? item.name.toLowerCase() : "";
+                    const email = item.email ? item.email.toLowerCase() : "";
+                    return name.includes(query) || email.includes(query);
+                });
+            }
+
+            renderTableContent();
+        }
+
+        // Helper to get raw data array based on current active tab
+        function getSourceList() {
+            switch (currentTab) {
+                case 'active': return apiData.activeSeats || [];
+                case 'completed': return apiData.completedSeats || [];
+                case 'waiting': return apiData.waitingList || [];
+                case 'cancelled': return apiData.cancelledList || [];
+                default: return [];
+            }
+        }
+
+        // Render table headers and fill in source rows for the selected tab
+        function renderCurrentTab() {
+            // Reset filtered list to full source list
+            const sourceList = getSourceList();
+            filteredList = [...sourceList];
+
+            // Render table header
+            const thead = document.getElementById('tableHead');
+            thead.innerHTML = '';
+
+            let headerRow = document.createElement('tr');
+            if (currentTab === 'active') {
+                headerRow.innerHTML = `
+                    <th>Học viên</th>
+                    <th>Điện thoại</th>
+                    <th>Trạng thái</th>
+                    <th>Ngày duyệt</th>
+                    <th style="text-align: right;">Thời hạn còn lại</th>
+                `;
+            } else if (currentTab === 'completed') {
+                headerRow.innerHTML = `
+                    <th>Học viên</th>
+                    <th>Thông tin Email</th>
+                    <th style="text-align: right;">Trạng thái</th>
+                `;
+            } else if (currentTab === 'waiting') {
+                headerRow.innerHTML = `
+                    <th>Học viên</th>
+                    <th>Điện thoại</th>
+                    <th>Ngày đăng ký</th>
+                    <th style="text-align: right;">Trạng thái</th>
+                `;
+            } else if (currentTab === 'cancelled') {
+                headerRow.innerHTML = `
+                    <th>Học viên</th>
+                    <th>Trạng thái</th>
+                    <th>Lý do thu hồi / Ghi chú</th>
+                `;
+            }
+            thead.appendChild(headerRow);
+
+            renderTableContent();
+        }
+
+        // Generate initials for avatar representation
+        function getInitials(name) {
+            if (!name) return "U";
+            let parts = name.trim().split(" ");
+            let lastWord = parts[parts.length - 1];
+            return lastWord.charAt(0).toUpperCase();
+        }
+
+        // Render rows content based on filtered list
+        function renderTableContent() {
+            const tbody = document.getElementById('tableBody');
+            const emptyState = document.getElementById('emptyState');
+            const dataTable = document.getElementById('dataTable');
+            
+            tbody.innerHTML = '';
+            
+            document.getElementById('entriesCount').textContent = `Hiển thị ${filteredList.length} dòng`;
+
+            if (filteredList.length === 0) {
+                dataTable.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            dataTable.style.display = 'table';
+            emptyState.style.display = 'none';
+
+            filteredList.forEach(item => {
+                let row = document.createElement('tr');
+                let avatarClass = "avatar";
+                
+                if (currentTab === 'completed') avatarClass += " avatar-completed";
+                if (currentTab === 'waiting') avatarClass += " avatar-purple";
+                if (currentTab === 'cancelled') avatarClass += " avatar-cancelled";
+
+                let initials = getInitials(item.name);
+
+                if (currentTab === 'active') {
+                    // Countdown coloring logic
+                    let remainingStr = item.daysLeft || "";
+                    let remainingClass = "countdown-none";
+                    
+                    if (remainingStr.includes("ngày")) {
+                        let days = parseInt(remainingStr);
+                        if (!isNaN(days)) {
+                            if (days > 30) remainingClass = "countdown-safe";
+                            else if (days > 10) remainingClass = "countdown-warning";
+                            else remainingClass = "countdown-danger";
+                        }
+                    } else if (remainingStr.includes("Đang học")) {
+                        remainingClass = "countdown-safe";
+                    } else if (remainingStr.includes("Quá hạn")) {
+                        remainingClass = "countdown-danger";
+                    }
+
+                    let statusBadgeClass = item.status === "Đang thực hiện" ? "badge-inprogress" : "badge-approved";
+
+                    row.innerHTML = `
+                        <td>
+                            <div class="std-name">
+                                <div class="${avatarClass}">${initials}</div>
+                                <div>
+                                    <span>${item.name}</span>
+                                    <span class="email-text">${item.email || "-"}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>${item.phone || '<span style="color: var(--text-muted)">-</span>'}</td>
+                        <td>
+                            <span class="badge ${statusBadgeClass}">
+                                <i class="fa-solid ${item.status === 'Đang thực hiện' ? 'fa-book-open' : 'fa-hourglass-start'}"></i>
+                                ${item.status}
+                            </span>
+                        </td>
+                        <td>${item.approvalDate || "-"}</td>
+                        <td style="text-align: right;">
+                            <span class="countdown ${remainingClass}">
+                                <i class="fa-regular ${remainingStr.includes('Đang học') ? 'fa-circle-play' : 'fa-clock'}"></i>
+                                ${remainingStr}
+                            </span>
+                        </td>
+                    `;
+                } else if (currentTab === 'completed') {
+                    row.innerHTML = `
+                        <td>
+                            <div class="std-name">
+                                <div class="${avatarClass}">${initials}</div>
+                                <div>
+                                    <span>${item.name}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>${item.email || '<span style="color: var(--text-muted)">-</span>'}</td>
+                        <td style="text-align: right;">
+                            <span class="badge badge-completed">
+                                <i class="fa-solid fa-circle-check"></i> Hoàn thành
+                            </span>
+                        </td>
+                    `;
+                } else if (currentTab === 'waiting') {
+                    row.innerHTML = `
+                        <td>
+                            <div class="std-name">
+                                <div class="${avatarClass}">${initials}</div>
+                                <div>
+                                    <span>${item.name}</span>
+                                    <span class="email-text">${item.email || "-"}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>${item.phone || '<span style="color: var(--text-muted)">-</span>'}</td>
+                        <td>${item.entryTime || "-"}</td>
+                        <td style="text-align: right;">
+                            <span class="badge badge-waiting">
+                                <i class="fa-solid fa-clock-rotate-left"></i> Hàng chờ
+                            </span>
+                        </td>
+                    `;
+                } else if (currentTab === 'cancelled') {
+                    let badgeClass = item.status === "Hủy" ? "badge-cancelled" : "badge-cancelled"; // dynamic if needed
+                    row.innerHTML = `
+                        <td>
+                            <div class="std-name">
+                                <div class="${avatarClass}">${initials}</div>
+                                <div>
+                                    <span>${item.name}</span>
+                                    <span class="email-text">${item.email || "-"}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge ${badgeClass}">
+                                <i class="fa-solid ${item.status === 'Hủy' ? 'fa-ban' : 'fa-circle-exclamation'}"></i>
+                                ${item.status}
+                            </span>
+                        </td>
+                        <td style="color: #b91c1c; font-style: italic;">${item.note || '<span style="color: var(--text-muted); font-style: normal;">-</span>'}</td>
+                    `;
+                }
+                tbody.appendChild(row);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1059,7 +1059,7 @@
             if (!str) return "";
             return str.replace("ngày", "Days")
                       .replace("Đang học", "In Progress")
-                      .replace("Quá hạn", "Overdue");
+                      .replace("Quá hạn", "Expired");
         }
 
         // Helper to translate statuses to English beautifully
@@ -1070,7 +1070,7 @@
                 case "Đang thực hiện": return "In Progress";
                 case "Hoàn thành": return "Completed";
                 case "Hàng chờ": return "Waitlist";
-                case "Quá hạn": return "Overdue";
+                case "Quá hạn": return "Expired";
                 case "Hủy": return "Cancelled";
                 default: return str;
             }

@@ -1114,8 +1114,8 @@
                     if (remainingStr.includes("ngày")) {
                         let days = parseInt(remainingStr);
                         if (!isNaN(days)) {
-                            if (days > 30) remainingClass = "countdown-safe";
-                            else if (days > 10) remainingClass = "countdown-warning";
+                            if (days > 60) remainingClass = "countdown-safe";
+                            else if (days > 15) remainingClass = "countdown-warning";
                             else remainingClass = "countdown-danger";
                         }
                     } else if (remainingStr.includes("Đang học")) {
